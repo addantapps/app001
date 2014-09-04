@@ -1,0 +1,174 @@
+<span><div id="rc_notify" ng-show="topMessage">{{topMessage}}</div></span>
+<div class="upload-container" ng-controller="DocumentUploadCtrl" ng-init="initUploadForm()" >
+    <div class="row alert-container an-fade">
+        <div class="alert" ng-show="show_alert" ng-class="{'alert-success': success, 'alert-danger': !success}" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            {{message}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="uplad-header">
+                <div class="row">
+                    <div class="col-md-9">
+                        <span class="title"><i class="glyphicon glyphicon-user"></i> Welcome {{unApprUser.FirstName+" "+unApprUser.LastName}}</span><br>
+                        <span class="subtitle">Please upload necessary documents and attach any zone for activating your account.</span>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#/" id="logout" class="pull-right  " ng-click="logout()"><i class="fa  fa-sign-out"></i> Signout </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" showtab="" href="#tab_1">Upload Document</a></li>
+                    <li class=""><a data-toggle="tab"  showtab="" href="#tab_2">Select Your Zone</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab_1" class="tab-pane active">
+                        <form novalidate="novalidate"  name="uploadForm" id="signup-form_id" ng-submit="uploadFile(uploadForm.$valid)" >
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group no-margin-hr" ng-class="{ 'has-error' : uploadForm.subdcriberType.$invalid  && uploadFormSubmitted }">
+                                        <label class="control-label">Subscriber Type</label>
+                                        <select   class="form-control" id="subdcriberType" name="subdcriberType"
+                                            ng-model="subscriberType" 
+                                            ng-options="type.Designation for type in subscriber_types track by type.ParkingFeeTypeID "
+                                            ng-change='loadDocumentType()' required >
+                                            <option value="">-- Select Subscriber Type --</option>
+                                        </select>
+                                        <p ng-show="uploadForm.subdcriberType.$invalid && uploadFormSubmitted " class="help-block">Subscriber type is required.</p>
+                                    </div>
+                                </div><!-- col-sm-4 -->
+                                <div class="col-sm-3">
+                                    <div class="form-group no-margin-hr"  ng-class="{ 'has-error' : uploadForm.DocumentType.$invalid  && uploadFormSubmitted }">
+                                        <label class="control-label">Document Type</label>
+                                         <select   class="form-control"  name="DocumentType"
+                                            ng-model="DocumentType" 
+                                            ng-options="dtype.DocumentTypeName for dtype in document_types track by dtype.SubscriberDocumentTypeID " required >
+                                            <option value="">-- Select Document Type --</option>
+                                        </select>
+                                         <p ng-show="uploadForm.DocumentType.$invalid && uploadFormSubmitted " class="help-block">Document type is required.</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group no-margin-hr" ng-class="{ 'has-error' : uploadForm.uploadfile.$invalid  && uploadFormSubmitted || file_size_invalid }">
+                                        <label class="control-label">File Upload</label>
+                                        
+                                        <input type="file" file-model="myFile" ng-model="myFile" name="uploadfile" class="filestyle form-control" data-buttonBefore="true"  filecheck required pdfimageonly >
+
+                                        <p ng-show="uploadForm.uploadfile.$invalid && uploadFormSubmitted && !uploadForm.uploadfile.$error.filetype" class="help-block">Upload file required.</p>
+                                        <p class="help-block" data-ng-show="uploadForm.uploadfile.$error.filetype && uploadFormSubmitted">Invalid file type. Only PDF/Image files are allowed</p>
+                                        <p class="help-block" data-ng-show="file_size_invalid && uploadFormSubmitted">Maximum file size allowed is 1MB</p>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <button class="btn btn-primary mr4"  type="submit" >Upload</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="upload-text">
+                            <span>Uploaded Documents</span>
+                        </div>
+                        <div class="box-body table-responsive">
+                            <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                <table ng-table="tableParams"  aria-describedby="example2_info" id="example2" class="table table-bordered table-hover dataTable">
+                                    <tr ng-repeat="document in $data">
+                                        <td data-title="'File Name'">
+                                            <a href="{{viewFileURL+document.DocumentName}}" target="_blank" >{{(document.DocumentName.split("_"))[1]}}</a></td>
+                                        <td data-title="'Subscriber Type'">
+                                            {{document.ParkingFeeTypeName}}
+                                        </td>
+                                        <td data-title="'Document  Type'">
+                                            {{document.SubscriberDocumentTypeName}}
+                                        </td>
+                                        <td data-title="'Delete'">
+                                            <button class="btn btn-danger btn-xs" click-anywhere-but-here="changeConfirmText()" ng-click="deleteDocument(document.SubscriberDocumentID,$event)"  >x</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- /.tab-pane -->
+                    <div id="tab_2" class="tab-pane">
+                        <form novalidate="novalidate"  name="zoneForm" id="signup-form_id" ng-submit="assignZone(zoneForm.$valid)">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group no-margin-hr" ng-class="{ 'has-error' : zoneForm.subdcriberType.$invalid  && zoneFormSubmitted }">
+                                        <label class="control-label">Subscriber Type</label>
+                                        <select   class="form-control" id="subdcriberType" name="subdcriberType"
+                                            ng-model="subscriberType" 
+                                            ng-options="type.Designation for type in subscriber_types track by type.ParkingFeeTypeID "
+                                            ng-change='loadDocumentType()' required >
+                                            <option value="">-- Select Subscriber Type --</option>
+                                        </select>
+                                        <p ng-show="zoneForm.subdcriberType.$invalid && zoneFormSubmitted " class="help-block">Subscriber type is required.</p>
+                                    </div>
+                                </div><!-- col-sm-4 -->
+                                <div class="col-sm-3">
+                                    <div class="form-group no-margin-hr" ng-class="{ 'has-error' : zoneForm.subdcriberZone.$invalid  && zoneFormSubmitted }">
+                                        <label class="control-label">Zone</label>
+                                        <select   class="form-control" id="subdcriberZone" name="subdcriberZone"
+                                            ng-model="subdcriberZone" 
+                                            ng-options="zone.Name for zone in subscriber_zone track by zone.ZoneID " required >
+                                            <option value="">-- Select zone --</option>
+                                        </select>
+                                        <p ng-show="zoneForm.subdcriberZone.$invalid && zoneFormSubmitted " class="help-block">Zone is required.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary mr4">Attach</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="upload-text">
+                            <span>Attached Zones</span>
+                        </div>
+                        <div class="box-body table-responsive">
+                            <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                               <table ng-table="tableZoneParams"  aria-describedby="example3_info" id="example3" class="table table-bordered table-hover dataTable">
+                                    <tr ng-repeat="zone in $data">
+                                        <td data-title="'Zone Name'">{{zone.ZoneName}}</td>
+                                        <td data-title="'Subscriber Type'">
+                                            {{zone.ParkingFeeTypeName}}
+                                        </td>
+                                        <td data-title="'Delete'">
+                                             <button class="btn btn-danger btn-xs" click-anywhere-but-here="changeConfirmText()" ng-click="deleteZone(zone.SubscriberZoneID,$event)"> x </button>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- /.tab-pane -->
+                </div><!-- /.tab-content -->
+            </div><!-- nav-tabs-custom -->
+        </div><!-- /.col -->
+    <!-- /.col -->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="submitUploadForm">
+                <div class="row">
+                    <div class="col-md-10">
+                        <p>Total Document Uploaded: {{tabledata.length}} | Total Zones Attached: {{zoneData.length}}</p>
+                    </div>
+                     <div class="col-md-1">
+                         <a  href="#/login" class="pull-right btn btn-danger" ng-click="logout()"> <i class="fa  fa-times"></i> Cancel </a>
+                    </div>
+                    <div class="col-md-1">
+                        <button  class="pull-right btn btn-primary" ng-click="submitDataUpload()"><i class="fa  fa-sign-out"></i> Submit  </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="javascripts/bootstrap-filestyle.min.js"> </script>

@@ -1,0 +1,194 @@
+<!-- header logo: style can be found in header.less -->
+<header class="header"  ng-controller="DashboardCtrl">
+    <a href="#/" class="logo">Subscriber Admin</a>
+    <!-- Sidebar toggle button-->
+    <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <section class="content-header">
+            <div class="pageicon pull-left"><i class="fa fa-home"></i></div>
+            <h1>My Account</h1>
+        </section>
+        <div class="navbar-right" >
+            <ul class="nav navbar-nav">
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" showtab data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span>Welcome {{audUser.FirstName+" "+audUser.LastName}} <i class="caret"></i></span>
+                    </a>
+                    <ul role="menu" class="dropdown-menu pull-right">
+                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-star"></i> Activity Log</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Account Settings</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i> Help</a></li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#/" ng-click="logout()" ><i class="glyphicon glyphicon-log-out"></i>Sign Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="wrapper row-offcanvas row-offcanvas-left"  ng-controller="DashboardCtrl" ng-init="loadDashboardData()">
+    <aside class="left-side sidebar-offcanvas">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>My Account</span></a></li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-bar-chart-o"></i><span>Documents & Subscription</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <aside class="right-side">
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-orange">
+                        <div class="inner">
+                            <div class="panel-icon"><i class="fa fa-info-circle"></i></div>
+                            <div class="media-body"><h1 class="mt5">Information</h1></div>
+                            <hr/>
+                            <div class="middle-box clearfix">
+                                <h4 class="md-title nomargin">Address</h4>
+                                <p>{{dashboardData.address.StreetName+", "+dashboardData.address.ZipCode+", "+dashboardData.address.City }}</p>
+                                <h4 class="md-title nomargin">Car Plate</h4>
+                                <p>{{ dashboardData.subscriber.CarPlate1 ? dashboardData.subscriber.CarPlate1 : "Not available" }} {{ dashboardData.subscriber.CarPlate2 ? ", "+dashboardData.subscriber.CarPlate2 : "" }} {{ dashboardData.subscriber.CarPlate3 ? ","+dashboardData.subscriber.CarPlate3 : "" }}</p>
+                            </div>
+                            <div class="small-box-footer">
+                                <button class="btn btn-orange btn-sm pull-right">Primary</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                <div class="col-lg-4 col-xs-6" id="subscription-widget">
+                    <div class="small-box bg-blue">
+                        <div class="inner">
+                            <div class="panel-icon"><i class="fa fa-rss"></i></div>
+                            <div class="media-body"><h1 class="mt5">Subscription</h1></div> 
+                            <hr/>
+                            <div class="middle-box clearfix">
+                                <h4  data-ng-repeat="zone in dashboardData.subscriptionZone" class="md-title nomargin" ng-reapeat>{{zone.ZoneID|type_string:'zone'}}</h4>
+                                 
+                                <p>
+                                    Card# {{dashboardData.subscriberCard.CardNumber}}<br>
+                                    Expiration Date: {{dashboardData.subscriberCard.ExpireDate}}
+                                </p>
+                            </div>
+                            <div class="small-box-footer">
+                                <button class="btn btn-blue btn-sm pull-right">Renew</button>
+                                <button class="btn btn-blue btn-sm pull-right">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-gray">
+                        <div class="inner">
+                            <div class="panel-icon"><i class="fa fa-dollar"></i></div>
+                            <div class="media-body"><h1 class="mt5">e Wallet</h1></div>
+                            <hr/>
+                            <div class="middle-box clearfix"><h4 class="md-title nomargin">15€60</h4></div>
+                            <div class="small-box-footer">
+                                <button class="btn btn-gray btn-sm pull-right">Add Cash</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+            <div class="row">
+                <div class="col-xs-12 connectedSortable ui-sortable">
+                    <div class="alert alert-info">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        <div class="alert-icon">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <strong>Your Suscription will expire soon (21/08/2014)!</strong><a class="alert-link" href=""> Don’t forget to renew it.</a>
+                    </div>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class=""><a data-toggle="tab" showtab href="#tab_1">e Wallet Operation</a></li>
+                            <li class="active"><a data-toggle="tab" showtab href="#tab_2">Parking Transactions</a></li>
+                            <li ><a data-toggle="tab" showtab href="#tab_3">Card Operation</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab_1" class="tab-pane">
+                                <p>dsdsd</p>
+                            </div><!-- /.tab-pane -->
+                            <div id="tab_2" class="tab-pane active">
+                                <div class="row">
+                                    <div class="col-xs-9"></div>
+                                    <div class="col-xs-3">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            <input type="daterange" ng-model="DateRangeParkingTrans" class="form-control pull-right"  ng-change="filterParkingTrans()" format="MM/DD/YYYY" >
+                                        </div> 
+                                    </div>
+                                </div> 
+                                <div class="box-body table-responsive"  style="margin-top: 10px;">
+                                    <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                        <table ng-table="parkingTransactionsTable"  aria-describedby="example2_info" id="example2" class="table table-bordered table-hover dataTable">
+                                            <tr ng-repeat="transaction in $data">
+                                                <td data-title="'Accounting Date'">{{(transaction.ADate.split(" "))[0]}}</td>
+                                                <td data-title="'Card No'">{{transaction.SubscriberCardNumber}}</td>
+                                                <td data-title="'Parking Lot'">{{transaction.ParkingLotNo}}</td>
+                                                <td data-title="'Kiosk Name'">{{transaction.kioskName}}</td>
+                                                <td data-title="'Amount'">{{transaction.Amount|number:2}} </td>
+                                                <td data-title="'Fee Type'">{{transaction.FeeTypeName}}</td>
+                                                <td data-title="'Car Plate'">{{transaction.CarPlate}}</td>
+                                                <td data-title="'Start Date'">{{transaction.SDate}}</td>
+                                                <td data-title="'End Date'">{{transaction.EDate}}</td>
+                                                <td data-title="'Duration'">{{transaction.Duration}}</td>
+                                          
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab_3" class="tab-pane">
+                                <div class="row">
+                                    <div class="col-xs-9"></div>
+                                    <div class="col-xs-3">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            <input type="daterange" ng-model="DateCardOperation" class="form-control pull-right" ng-change="filterCardOperation()" format="MM/DD/YYYY">
+                                        </div> 
+                                    </div>
+                                </div> 
+                                <div class="box-body table-responsive"  style="margin-top: 10px;">
+                                    <div id="example3_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                        <table ng-table="cardOperationsTable"  aria-describedby="example2_info" id="example3" class="table table-bordered table-hover dataTable">
+                                            <tr ng-repeat="transaction in $data">
+                                                <td data-title="'Transaction Date'">{{(transaction.TDate.split(" "))[0]}}</td>
+                                                <td data-title="'Card No'">{{transaction.SubscriberCardNumber}}</td>
+                                                <td data-title="'Payment Type'">{{transaction.PaymentTypeName}}</td>
+                                                <td data-title="'Card Operation Type'">{{transaction.SubscriberCardOperationTypeName}}</td>
+                                                <td data-title="'Card Operation ID'">{{transaction.SubscriberCardOperationID}}</td>
+                                                <td data-title="'Amount'">{{transaction.Amount|number:2}} </td>
+                                                <td data-title="'Cancelled'">{{transaction.IsCancelled ? "Yes": "No"}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>    
+            </div>        
+        </section><!-- /.content -->
+    </aside><!-- /.right-side -->
+</div><!-- ./wrapper -->
+<script type="text/javascript" src="javascripts/daterangepicker.js"> </script>
+<link rel='stylesheet' href='/stylesheets/daterangepicker-bs3.css' />

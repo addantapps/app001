@@ -1,0 +1,112 @@
+
+
+<div class="signup-container page-signup" ng-controller="SignUpCtrl">
+    <div class="wizard-steps">
+        <div class=""><a href="#/sign-up"><span><span>1</span></span> User Account</a></div>
+        <div class=""><a href="#/card-holder" ><span><span>2</span></span> Personal Information</a></div>
+        <div class="active-step"><a href="javascript:;" class="last-wizard"><span><span>3</span></span> Vehicle Information</a></div>
+    </div>
+
+    <!-- Form -->
+    <div class="signup-form">
+        <div class="row ">
+            <div class="alert alert-danger elhidden" role="alert">{{message}}</div>
+        </div>
+        <div class="jumbotron-own elhidden">
+            <h2>Your Semiacs Account has been Created!</h2>
+            <h4>You're almost there! Activate your Semiacs account.</h4>
+            <p>Thank you for registering!  An email containing an activation link has been sent to your email address. Activation is required in order to verify that the email address provided is owned by you.</p>
+            <p>To begin using your Semiacs account, click on the activation link in the email that you receive.</p>
+            <p><a class="btn btn-primary btn-lg" role="button" href="#/login">Go Home</a></p>
+        </div>
+        <form id="vehicleInfoForm" name="vehicleInfoForm"  ng-submit="submitVehicleInfoForm(vehicleInfoForm.$valid)"   novalidate  >
+            <div class="signup-text">
+                <span>Vehicle Information</span>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr" ng-class="{ 'has-error' : vehicleInfoForm.make1.$invalid  && signupFormSubmitted  }">
+                        <label class="control-label">Make 1*</label>
+                        <input type="text" name="make1" class="form-control" ng-model="subscriber.make1" required >
+                        <p ng-show="vehicleInfoForm.make1.$invalid && signupFormSubmitted " class="help-block">Make 1 is required.</p>
+                    </div>
+                </div><!-- col-sm-4 -->
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr" ng-class="{ 'has-error' : vehicleInfoForm.model1.$invalid  && signupFormSubmitted  }">
+                        <label class="control-label">Model 1*</label>
+                        <input type="text" class="form-control" name="model1" ng-model="subscriber.model1" required >
+                        <p ng-show="vehicleInfoForm.model1.$invalid && signupFormSubmitted " class="help-block">Model 1 is required.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr" ng-class="{ 'has-error' : vehicleInfoForm.carPlate1.$invalid  && signupFormSubmitted  }">
+                        <label class="control-label">Car Plate 1*</label>
+                        <input type="text" class="form-control"  name="carPlate1" ng-model="subscriber.carPlate1" required >
+                        <p ng-show="vehicleInfoForm.carPlate1.$invalid && signupFormSubmitted " class="help-block">Car Plate 1 is required.</p>
+                    </div>
+                </div><!-- col-sm-4 -->
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Make 2</label>
+                        <input type="text" name="make2" class="form-control" ng-model="subscriber.make2" >
+                    </div>
+                </div><!-- col-sm-4 -->
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Model 2</label>
+                        <input type="text" class="form-control" name="model2" ng-model="subscriber.model2" >
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Car Plate 2 </label>
+                        <input type="text" class="form-control" name="carPlate2" ng-model="subscriber.carPlate2" >
+                    </div>
+                </div><!-- col-sm-4 -->
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Make3</label>
+                        <input type="text" name="make3" class="form-control" ng-model="subscriber.make3" >
+                    </div>
+                </div><!-- col-sm-4 -->
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Model 3</label>
+                        <input type="text" class="form-control" name="model3" ng-model="subscriber.model3" >
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Car Plate 3</label>
+                        <input type="text" class="form-control" name="carPlate3" ng-model="subscriber.carPlate3" >
+                    </div>
+                </div><!-- col-sm-4 -->
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Comments</label>
+                        <textarea rows="3" class="form-control" name="comments" ng-model="subscriber.comments"  ></textarea>
+                    </div>
+                </div><!-- col-sm-4 -->              
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="#/card-holder" class="btn btn-primary">Back</a>
+                </div>
+                <div class="col-sm-6">
+                    <button  type="submit"  class="btn btn-primary pull-right" id="submit"> FINISH</button>
+                </div>
+            </div>
+        </form>
+        <!-- / Form -->
+    </div>
+</div>

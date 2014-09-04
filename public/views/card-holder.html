@@ -1,0 +1,110 @@
+<div class="signup-container page-signup"  ng-controller="SignUpCtrl" >
+    <div class="wizard-steps">
+        <div ><a href="#/sign-up"><span><span>1</span></span> User Account</a></div>
+        <div class="active-step"><a href="#/card-holder"><span><span>2</span></span>Personal Information</a></div>
+        <div class=""><a href="javascript:;" class="last-wizard" ng-click="submitHolderForm(holderForm.$valid)"> <span><span>3</span></span> Vehicle Information</a></div>
+    </div>
+
+    <!-- Form -->
+    <div class="signup-form">
+        <form id="holderForm" name="holderForm" ng-submit="submitHolderForm(holderForm.$valid)" ng-init="loadLocataire()"   novalidate >
+            <div class="signup-text">
+                <span>Personal Information</span>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Phone Number</label>
+                        <input type="text" name="phoneNumber" class="form-control" ng-model="subscriber.phoneNumber" >
+                    </div>
+                </div><!-- col-sm-4 -->
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Mobile Number</label>
+                        <input type="text" class="form-control" name="mobNumber" ng-model="subscriber.mobNumber" >
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Locataire</label>
+                        <select name="locataire" class="form-control" ng-model="subscriber.locataire" >
+                          <option value="">-- Select locataire --</option>
+                          <option data-ng-repeat="locat in locataire" value="{{ locat.HomeStayTypeID }}">{{ locat.HomeStayType1 }}</option>
+                      </select>
+                  </div>
+                </div><!-- col-sm-4 -->
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Name of Residence</label>
+                        <input type="text" name="nameResidence" class="form-control" ng-model="subscriber.nameResidence" >
+                    </div>
+                </div><!-- col-sm-4 -->
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Floor</label>
+                        <input type="text" class="form-control" name="floor" ng-model="subscriber.floor" >
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Appartment</label>
+                        <input type="text" class="form-control" name="appartment" ng-model="subscriber.appartment" >
+                    </div>
+                </div><!-- col-sm-4 -->
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr"  ng-class="{ 'has-error' : holderForm.block.$invalid  && holderFormSubmitted }">
+                        <label class="control-label">Block*</label>
+                        <input type="text" name="block" class="form-control" ng-model="subscriber.block" required >
+                        <p ng-show="holderForm.block.$invalid && holderFormSubmitted " class="help-block">Block is required.</p>
+                    </div>
+                </div><!-- col-sm-4 -->
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr" ng-class="{ 'has-error' : holderForm.streetType.$invalid  && holderFormSubmitted }">
+                        <label class="control-label">Street Type*</label> 
+                        <input type="text" class="form-control" name="streetType" ng-model="subscriber.streetType"  required >
+                        <p ng-show="holderForm.streetType.$invalid && holderFormSubmitted " class="help-block">Street Type is required.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr"  ng-class="{ 'has-error' : holderForm.streetName.$invalid  && holderFormSubmitted }">
+                        <label class="control-label">Street Name*</label>
+                        <input type="text" class="form-control" name="streetName" ng-model="subscriber.streetName"  required >
+                        <p ng-show="holderForm.streetName.$invalid && holderFormSubmitted " class="help-block">Street Name is required.</p>
+                    </div>
+                </div><!-- col-sm-4 -->
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr"  ng-class="{ 'has-error' : holderForm.zipCode.$invalid  && holderFormSubmitted }">
+                        <label class="control-label">Zip Code*</label>
+                        <input type="text" name="zipCode" class="form-control" ng-model="subscriber.zipCode" ng-class="{ 'has-error' : holderForm.block.$invalid  && holderFormSubmitted }" required >
+                        <p ng-show="holderForm.zipCode.$invalid && holderFormSubmitted " class="help-block">Street Name is required.</p>
+                    </div>
+                </div><!-- col-sm-4 -->
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr"  ng-class="{ 'has-error' : holderForm.city.$invalid  && holderFormSubmitted }">
+                        <label class="control-label">City*</label>
+                        <input type="text" class="form-control" name="city" ng-model="subscriber.city" ng-class="{ 'has-error' : holderForm.block.$invalid  && holderFormSubmitted }" required >
+                        <p ng-show="holderForm.city.$invalid && holderFormSubmitted " class="help-block">Street Name is required.</p>
+                    </div>
+                </div><!-- col-sm-4 -->
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="#/sign-up" class="btn btn-primary">BACK</a>
+                </div>
+                <div class="col-sm-6">
+                    <button  type="submit"  class="btn btn-primary pull-right" id="submit"> NEXT</button>
+                </div>
+            </div>
+        </form>
+        <!-- / Form -->
+    </div>
+</div>

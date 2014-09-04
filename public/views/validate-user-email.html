@@ -1,0 +1,22 @@
+<div class="signup-container page-signup" ng-controller="SignUpCtrl">
+    <div class="signup-form" ng-init="validateUserEmail()">
+        <div class="row ">
+            <div class="alert alert-danger hide" role="alert"></div>
+        </div>
+        <div class="jumbotron-own" ng-show="isLoading">
+            <h2>Please Wait!</h2>
+            <p>Validating your Email id</p>
+            <div class="loading-animation"></div>
+        </div>
+        <div class="jumbotron-own" ng-show="ifValidated">
+            <h2>Thank you!</h2>
+            <p>Thank you for verifiying your email id. Your account has been submitted to the approval.  Please login your acount and upload all the necessary document for your card</p>
+            <p><a class="btn btn-primary btn-lg" role="button" href="#/login">Login</a></p>
+        </div>
+        <div class="jumbotron-own" ng-show="ifError">
+            <h2>Error!</h2>
+            <p>User Account Not Found!</p>
+            <p><a class="btn btn-primary btn-lg" role="button" href="#/login">Login</a></p>
+        </div>
+    </div>
+</div> 

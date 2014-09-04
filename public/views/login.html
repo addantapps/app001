@@ -1,0 +1,83 @@
+
+
+<div class="signin-container page-signin container" >
+
+    <div class="row alert-container an-fade"><div class="alert" ng-show="show_alert" ng-class="{'alert-success': success, 'alert-danger': !success}" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     {{message}}</div></div>
+    <!-- Left side --><div class="row">
+    <div class="signin-info">
+      <div class="logo">
+        <!-- <img style="margin-top: -5px;" alt="" src="assets/demo/logo-big.png">&nbsp; -->
+        Create a new Customer Services user account on Semiacs 
+      </div> <!-- / .logo -->
+      <div class="slogan">
+        You must register before using this Online Application system. If you have 
+previously registered, please proceed with Log In.
+<div class="form-actions" style="text-align:center;">
+          
+          <a href="#/sign-up" class="btn btn-success"  style="width:38%" role="button">SIGN UP</a>
+        </div> <!-- / .form-actions -->
+      </div> <!-- / .slogan -->
+    </div>
+    <!-- / Left side -->
+
+      <!-- Right side -->
+    <div class="signin-form">
+
+      <!-- Form -->
+      <form id="signin-form_id"  novalidate="novalidate" ng-submit="login()"  ng-show="!show" ng-hide="show">
+        <div class="signin-text">
+          <span class="fa fa-lock signin-form-icon"></span>
+          <span>LOG IN</span>
+        </div> <!-- / .signin-text -->
+
+        <div class="form-group w-icon">
+          <input type="text" placeholder="Username" class="form-control input-lg" id="username_id" name="signin_username"  ng-model="user.username"  >
+          <span class="fa fa-user signin-form-icon"></span>
+        </div> <!-- / Username -->
+
+        <div class="form-group w-icon">
+          <input type="password" placeholder="Password" class="form-control input-lg" id="password_id" name="signin_password" ng-model="user.password">
+          <span class="fa fa-lock signin-form-icon"></span>
+        </div> <!-- / Password -->
+
+        <div class="form-actions">
+          <input type="submit" class="signin-btn bg-primary" value="SIGN IN" ng-model="user.signin">
+          <div class="form-actions">
+          <input type="checkbox" value="true" style="margin-top:0; float:left;" name="rememberme" ng-model="user.rememberme">
+          <span id="forgot-password-link" class="remember" href >Stay Sign in</span>
+          <a id="forgot-password-link" class="forgot-password" href ng-click="show = !show" >Forgot your password?</a>
+        </div>
+          
+          
+        </div> <!-- / .form-actions -->
+      </form>
+      <!-- / Form -->
+      <form id="signin-form_id"  novalidate="novalidate" ng-submit="forgetPassword()" ng-hide="!show" ng-show="show">
+        <div class="signin-text">
+          <span class="fa fa-unlock signin-form-icon"></span>
+          <span>Forget Password</span>
+        </div> <!-- / .signin-text -->
+
+        <div class="form-group w-icon">
+          <input type="text" placeholder="Your Email" class="form-control input-lg" id="email_id" name="email_id"  ng-model="user.femail" ng-disabled="disableEmail" >
+          <span class="fa fa-envelope signin-form-icon"></span>
+        </div> <!-- / Username -->
+
+       
+
+        <div class="form-actions">
+          <input type="submit" class="signin-btn bg-primary" value="SUBMIT" ng-model="user.submit">
+          <div class="form-actions">
+          <a id="forgot-password-link" class="forgot-password" href    ng-click="show = !show">Back to sign in</a>
+        </div>
+          
+          
+        </div> <!-- / .form-actions -->
+      </form>
+
+    </div>
+    </div>
+    <!-- Right side -->
+  </div>

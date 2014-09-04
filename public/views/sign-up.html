@@ -1,0 +1,71 @@
+<div class="signup-container page-signup"  ng-controller="SignUpCtrl" >
+	<div class="wizard-steps">
+		<div class="active-step"><a href="#/sign-up"><span><span>1</span></span> User Account</a></div>
+		<div class=""><a href="javascript:;" ng-click="submitSignupFormUserAcount(SignupForm.$valid)"><span><span>2</span></span>Personal Information</a></div>
+		<div class=""><a href="javascript:;" class="last-wizard"><span><span>3</span></span> Vehicle Information</a></div>
+	</div>
+	<!-- Form -->
+	<div class="signup-form">
+		<form id="signup-form_id" name="SignupForm" ng-submit="submitSignupFormUserAcount(SignupForm.$valid)"   novalidate >
+
+			<div class="signup-text"><span>User Account</span></div>
+
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group no-margin-hr"  ng-init="titles ={'Mr','Miss','Mrs'} ">
+						<label class="control-label">Title</label>
+						<select ng-model="subscriber.title"   name="title"  class="form-control" 
+							ng-options="option for option in ['Mr','Miss','Mrs'] track by option" >
+        				 	<option value="">-- Select Title --</option>
+    					</select>
+					</div>
+				</div><!-- col-sm-4 -->
+				<div class="col-sm-4">
+					<div class="form-group no-margin-hr" ng-class="{ 'has-error' : SignupForm.firstName.$invalid  && signupFormSubmitted  }" >
+						<label class="control-label">Firstname*</label>
+						<input type="text" class="form-control" name="firstName" ng-model="subscriber.firstName" required >
+						<p ng-show="SignupForm.firstName.$invalid && signupFormSubmitted " class="help-block">First Name is required.</p>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group no-margin-hr" ng-class="{ 'has-error' : SignupForm.LastName.$invalid  && signupFormSubmitted  }">
+						<label class="control-label">Lastname*</label>
+						<input type="text" class="form-control" name="LastName" ng-model="subscriber.LastName" required >
+						<p ng-show="SignupForm.LastName.$invalid && signupFormSubmitted " class="help-block">Last Name is required.</p>
+					</div>
+				</div><!-- col-sm-4 -->
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group no-margin-hr" ng-class="{ 'has-error' : (SignupForm.email.$invalid || SignupForm.email.$error.unique) && signupFormSubmitted  }">
+						<label class="control-label">Email(User Name)*</label>
+						<input type="email" name="email" class="form-control" ng-model="subscriber.email" ng-unique required>
+						<p ng-show="SignupForm.email.$invalid && signupFormSubmitted && !SignupForm.email.$error.unique" class="help-block">Enter a valid email.</p>
+						<p class="help-block" data-ng-show="SignupForm.email.$error.unique && signupFormSubmitted">Email already exists.</p>
+					</div>
+				</div><!-- col-sm-4 -->
+				<div class="col-sm-4">
+					<div class="form-group no-margin-hr" ng-class="{ 'has-error' : SignupForm.spassword.$invalid  && signupFormSubmitted  }">
+						<label class="control-label">Password*</label>
+						<input type="password"  id="spassword" class="form-control" name="spassword" ng-model="subscriber.spassword" required >
+						<p ng-show="SignupForm.spassword.$invalid && signupFormSubmitted " class="help-block">Password is required.</p>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group no-margin-hr" ng-class="{ 'has-error' : (SignupForm.cpassword.$invalid ||((SignupForm.spassword.$dirty || SignupForm.cpassword.$dirty) && (subscriber.spassword != subscriber.cpassword)))  && signupFormSubmitted  }">
+						<label class="control-label">Confirm Password*</label>
+						<input type="password" class="form-control" name="cpassword" id="cpassword"   ng-model="subscriber.cpassword"  required >
+						<p ng-show="SignupForm.cpassword.$invalid && signupFormSubmitted && !SignupForm.cpassword.$error.match && SignupForm.spassword.$invalid" class="help-block">Confirm Password is required.</p>
+						<p ng-show="(SignupForm.spassword.$dirty || SignupForm.cpassword.$dirty) && (subscriber.spassword != subscriber.cpassword) && signupFormSubmitted" class="help-block">Passwords don't match.</p>
+					</div>
+				</div><!-- col-sm-4 -->
+			</div>
+			<div class="row">
+				<div class="col-sm-2  col-md-offset-10">
+					<button  type="submit"  class="btn btn-primary pull-right" id="submit"> NEXT</button> 
+				</div>
+			</div>	
+		</form>	<!-- / Form -->
+	</div>
+</div>
