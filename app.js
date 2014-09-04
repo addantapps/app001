@@ -16,8 +16,7 @@ var conv = require('binstring');
 passport.use(new LocalStrategy(
     function(username, password, done) {
         request.get(serviceBaseURL+"/SubscriberCredential/"+username+","+password, function (error, response, body) {
-            console.log(error,response,body);
-            if (error!==null && response.statusCode == 200) {
+            if (error === null && response.statusCode === 200) {
                 subscriberUser = JSON.parse(body);
                 return done(null, subscriberUser);
             } else { 
@@ -105,8 +104,10 @@ res.send(req.user);
 });
 */
 app.post('/login', function(req, res, next) {
-    passport.authenticate('local', function(err, user) {  console.log(locals.user);
-        if (user && user.EnrollmentStatusID == 1) { 
+    passport.authenticate('local', function(err, user) { console.log(user);
+        if (user === undefined) 
+            return res.send(404, err); 
+        else if (user.EnrollmentStatusID == 1) { 
             req.logIn(user, function(err) { 
                 if (err) {  return next(err); }
                 return res.send(user); 

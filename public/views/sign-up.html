@@ -12,7 +12,7 @@
 
 			<div class="row">
 				<div class="col-sm-4">
-					<div class="form-group no-margin-hr"  ng-init="titles ={'Mr','Miss','Mrs'} ">
+					<div class="form-group no-margin-hr"  ng-init="titles=['Mr','Miss','Mrs']">
 						<label class="control-label">Title</label>
 						<select ng-model="subscriber.title"   name="title"  class="form-control" 
 							ng-options="option for option in ['Mr','Miss','Mrs'] track by option" >

@@ -4,7 +4,6 @@
 var forever = require('forever');
 
 var child = new (forever.Monitor)('app.js', {
-	silent	: true,	
   	options	: ['c'],
   	command	: 'node'
 });
